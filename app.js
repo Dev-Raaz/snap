@@ -51,5 +51,5 @@ app.use("/snaps", snapRoutes);
 
 
 app.listen(3000, () =>{
-	console.log('Server Started!');
+	console.log(`Server started!`);
 });

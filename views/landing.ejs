@@ -8,9 +8,42 @@
 			 Want to start your own blog?
 		 </p>
 		 <p>
-			<a class="btn btn-primary btn-lg" href="/snaps/index">Create New Blog</a>
+			<a class="btn btn-primary btn-lg" href="/snaps">Create New Blog</a>
 		 </p>
 	 </div>
 </header>
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+	<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseSnap" aria-expanded="false" 			aria-controls="collapseExample">All</button>
+	<div class="collapse" id="collapseSnap">
+		<% ssnaps.forEach(function(snap){ %>
+		<div class="col-md-3 col-sm-6">
+			<div class="thumbnail">
+			   <img src="<%= snap.image %>" >
+			   <div class="caption">
+				   <h4><%= snap.name %></h4>
+			   </div>
+			</div>
+		</div>
+	    <% }); %> 
+	 </div>
+	<% tagsArr.forEach(function(tag){ %>
+		<button 
+		class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseTag<%= tag %>" aria-expanded="false" 		aria-controls="collapseExample"><%= tag %></button>
+	    <div class="collapse" id="collapseTag<%= tag %>">
+			<% ssnaps.forEach(function(snap){ %>
+			   <% if(snap.tags.includes(tag)){ %>
+				<div class="col-md-3 col-sm-6">
+					<div class="thumbnail">
+					   <img src="<%= snap.image %>" >
+					   <div class="caption">
+						   <h4><%= snap.name %></h4>
+					   </div>
+					</div>
+				</div>
+			   <% } %> 
+		   <% }); %> 
+	    </div>
+	<% }); %> 
+</div>
 
 <%- include("./partials/footer")  %> 

@@ -10,7 +10,7 @@ const express  	   = require("express"),
 
 const indexRoutes 	= require("./routes/index"),
 	  snapRoutes 	= require("./routes/snaps");
-
+// arr;
 
 
 mongoose.connect('mongodb://localhost:27017/ohh_snap', {

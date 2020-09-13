@@ -1,6 +1,7 @@
 let express    	= require("express"),
 	router     	= express.Router(),
  	passport 	= require("passport"),
+		Snap      	= require("../models/snap"),
 	User 	    = require("../models/user");
 
 require('dotenv').config();
@@ -29,8 +30,24 @@ cloudinary.config({
 });
 
 //root route
-router.get("/", (req, res)=>{
-    res.render("landing");
+router.get("/", async (req, res)=>{
+   try{
+	    let snaps = await Snap.find();
+		var tagsArr = [];
+		await snaps.forEach( async (snap)=>{
+			if(snap.tags.length>0){
+				await snap.tags.forEach(async (tag)=>{
+					if(!tagsArr.includes(tag))
+						await tagsArr.push(tag);
+				});
+			}
+		});
+	    res.render("landing",{ssnaps: snaps,tagsArr});
+	}
+	 catch(err) {
+	  req.flash('error', err.message);
+	  res.redirect('back');
+	}
 });
 
 // show register form
@@ -85,10 +102,16 @@ router.get("/", (req, res)=>{
 });
 
 // logic route
- router.get("/logout", (req, res)=>{
-   req.logout();
-	  req.flash("success", "Logged you out!");
-   res.redirect("/snaps");
+ router.get("/logout", async(req,res)=>{
+	 try{
+		  req.logout();
+          req.flash("success", "Logged you out!");
+   	 	  res.redirect("/");
+	 }
+	 catch(err){
+		 console.log(err);
+	 }
+  
 });
 
 module.exports = router;

@@ -9,8 +9,8 @@ const snapSchema = new mongoose.Schema({
          ref: "User"
       },
       username: String
-   },
-	tags: [{ type: String }]
+    },
+	tags: [{type: String}]
 });
 
 module.exports = mongoose.model("Snap", snapSchema);
